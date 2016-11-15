@@ -1,0 +1,28 @@
+{
+  "name": "oh-my-videojs",
+  "version": "1.0.0",
+  "description": "oh my video.js and video-js-swf",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node build.js",
+    "serve": "pushd www;python -m SimpleHTTPServer 10248;popd;"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zcoding/oh-my-videojs.git"
+  },
+  "keywords": [
+    "video.js",
+    "video-js-swf"
+  ],
+  "author": "codingcat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zcoding/oh-my-videojs/issues"
+  },
+  "homepage": "https://github.com/zcoding/oh-my-videojs#readme",
+  "devDependencies": {
+    "flex-sdk": "^4.6.0-0"
+  }
+}

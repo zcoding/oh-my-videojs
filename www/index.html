@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MiniPlayer 播放器</title>
+  <style>
+  .player {
+    width: 640px;
+    height: 400px;
+    margin: 0 auto;
+  }
+  </style>
+</head>
+<body>
+  <div class="player">
+    <object type="application/x-shockwave-flash" width="100%" height="100%" id="player"> 
+      <param name="movie" value="/player/mini.swf">
+      <param name="wmode" value="opaque">
+      <param name="allowScriptAccess" value="always">
+    </object>
+  </div>
+  <script>
+    function player_ready() {
+      console.log('ready');
+    }
+    function debug_as_log(msg) {
+      console.log(msg);
+    }
+  </script>
+</body>
+</html>
