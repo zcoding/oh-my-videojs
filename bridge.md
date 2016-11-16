@@ -40,7 +40,7 @@ swfobj.as_func(params); // 在这个对象上调用刚刚定义的方法
 + `vjs_getProperty` 获取属性值
 + `vjs_setProperty` 设置属性值
 + `vjs_autoplay`
-+ `vjs_src`
++ `vjs_src` 设置播放链接（会触发重新播放和相关事件）
 + `vjs_load`
 + `vjs_play`
 + `vjs_pause`
@@ -77,3 +77,23 @@ swfobj.as_func(params); // 在这个对象上调用刚刚定义的方法
 + `videoHeight` 播放区的高度（就是播放器的高度）
 + `rtmpConnection` RTMP 连接地址
 + `rtmpStream` RTMP 流地址
+
+### vjs_setProperty 可以设置哪些属性值
+
+__只有下面这些属性是可以设置的，如果要设置的属性不在此列，video-js-swf 会报错给你看__
+
++ `duration`
++ `mode`
++ `loop`
++ `background` 设置播放器的背景颜色
++ `eventProxyFunction`
++ `errorEventProxyFunction`
++ `autoplay`
++ `preload`
++ `src` 同调用 vjs_src 的效果
++ `currentTime` 设置播放时间会触发 seeking 阶段，播放画面会跳到指定的位置
++ `currentPercent` 效果同 currentTime 但是通过百分比来指定播放位置
++ `muted`
++ `volume`
++ `rtmpConnection`
++ `rtmpStream`
