@@ -1,4 +1,4 @@
-package {
+package com.miniplayer {
 
   import flash.events.EventDispatcher;
   import flash.events.NetStatusEvent;
@@ -11,7 +11,7 @@ package {
   import flash.utils.getTimer;
 
   public class HTTPVideoProvider extends EventDispatcher {
-    private var _uiVideo:Video;
+    private var _videoReference:Video;
 
     private var _src:String = "";
     private var _nc:NetConnection;
@@ -148,8 +148,8 @@ package {
       _ns.bufferTimeMax = _bufferTimeMax;
       _ns.useHardwareDecoder = true; // 使用硬件解码
       _ns.play(_src);
-      _uiVideo.clear();
-      _uiVideo.attachNetStream(_ns);
+      _videoReference.clear();
+      _videoReference.attachNetStream(_ns);
     }
 
     public function onMetaData(pMetaData:Object):void {
@@ -163,9 +163,9 @@ package {
       Logger.log("async error");
     }
 
-    // 设置 video
+    // 设置 _videoReference
     public function attachVideo(_video:Video):void {
-      _uiVideo = _video;
+      _videoReference = _video;
     }
 
     private function formatThroughput (cThroughput:int):String {

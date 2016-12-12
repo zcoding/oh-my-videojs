@@ -1,4 +1,4 @@
-package {
+package com.miniplayer {
 
   import flash.external.ExternalInterface;
 

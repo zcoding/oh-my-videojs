@@ -11,6 +11,9 @@ package {
   import flash.events.ContextMenuEvent;
   import flash.media.Video;
 
+  import com.miniplayer.Logger;
+  import com.miniplayer.PlayerModel;
+
   [SWF(backgroundColor="#000000", frameRate="60", width="640", height="480")]
   public class MiniPlayer extends Sprite {
 

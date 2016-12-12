@@ -1,7 +1,8 @@
-package {
+package com.miniplayer {
 
   import flash.events.EventDispatcher;
   import flash.media.Video;
+  import com.miniplayer.events.MiniPlayerEvent;
 
   public class PlayerModel extends EventDispatcher {
 
