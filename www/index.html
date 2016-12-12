@@ -19,9 +19,12 @@
       <param name="allowScriptAccess" value="always">
     </object>
   </div>
+  <script src="/player/player.js"></script>
   <script>
+    const player = MiniPlayer('player');
     function player_ready() {
       console.log('ready');
+      player.play('http://pull4.kwaily.cn/spark-live/584e3e9890e6990741a3fc82_OD.flv');
     }
     function debug_as_log(msg) {
       console.log(msg);

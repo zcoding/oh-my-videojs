@@ -30,7 +30,7 @@ var swfobj = document.getElementById('player'); // 获取到 swf 所在的 objec
 swfobj.as_func(params); // 在这个对象上调用刚刚定义的方法
 ```
 
-## video-js-swf 提供给 video.js 的 API
+## video-js-swf 提供给 video.js 的 API （JS 调用 AS）
 
 + `vjs_appendBuffer` 通过 Base64 字符串来添加 Buffer
 + `vjs_echo` 没什么用 ?
