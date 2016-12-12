@@ -8,6 +8,10 @@ package com.miniplayer {
       ExternalInterface.call("debug_as_log", msg);
     }
 
+    public static function info(msg:Object):void {
+      ExternalInterface.call("debug_as_log", msg);
+    }
+
   }
 
 }

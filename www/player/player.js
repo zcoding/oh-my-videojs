@@ -12,6 +12,10 @@ function Player (el) {
 
 Player.prototype.play = function (src) {
   this._el.minijs_setProperty("src", src);
+  console.message().text(src, {
+    fontSize: 16,
+    color: 'red'
+  }).print();
 };
 
 Player.prototype.pause = function () {

@@ -1,4 +1,4 @@
-package com.miniplayer {
+package com.miniplayer.providers {
 
   import flash.events.EventDispatcher;
   import flash.events.NetStatusEvent;
@@ -9,8 +9,9 @@ package com.miniplayer {
   import flash.events.TimerEvent;
   import flash.media.Video;
   import flash.utils.getTimer;
+  import com.miniplayer.Logger;
 
-  public class HTTPVideoProvider extends EventDispatcher {
+  public class HTTPVideoProvider extends EventDispatcher implements IProvider {
     private var _videoReference:Video;
 
     private var _src:String = "";
@@ -32,20 +33,22 @@ package com.miniplayer {
       _throughputTimer.addEventListener(TimerEvent.TIMER, onThroughputTimerTick);
     }
 
-    public function setSrc(pSrc:String = ""):void {
-      _src = pSrc;
-      init();
+    private function formatThroughput (cThroughput:int):String {
+      if (cThroughput < 1024) {
+        return cThroughput + " B/s";
+      } else if (cThroughput < 1024 * 1024) {
+        return (cThroughput / 1024) + " KB/s";
+      } else {
+        return (cThroughput / (1024 * 1024)) + " MB/s";
+      }
     }
 
-    private function init():void {
-      initNetConnection();
-    }
-
-    public function play():void {
-    }
-
-    public function pause():void {
-      _ns.pause();
+    // 计时器：throughputTimer
+    private function onThroughputTimerTick (e:TimerEvent):void {
+      if (_ns) {
+        _currentThroughput = _ns.bytesLoaded / ((getTimer() - _loadStartTimestamp) / 1000);
+        // Logger.log("当前加载速率: " + formatThroughput(_currentThroughput));
+      }
     }
 
     // 监听 NetConnection 连接状态
@@ -148,42 +151,77 @@ package com.miniplayer {
       _ns.bufferTimeMax = _bufferTimeMax;
       _ns.useHardwareDecoder = true; // 使用硬件解码
       _ns.play(_src);
-      _videoReference.clear();
       _videoReference.attachNetStream(_ns);
     }
 
-    public function onMetaData(pMetaData:Object):void {
-      _metaData = pMetaData;
-      for (var k:String in _metaData) {
-        //Logger.log(k + ": " + _metaData[k]);
-      }
+    private function init():void {
+      initNetConnection();
     }
 
-    private function onAsyncError(e:AsyncErrorEvent):void {
-      Logger.log("async error");
+    public function load():void {}
+
+    public function play():void {
     }
+
+    public function pause():void {
+      _ns.pause();
+    }
+
+    public function resume():void {}
+
+    public function stop():void {}
 
     // 设置 _videoReference
     public function attachVideo(_video:Video):void {
       _videoReference = _video;
     }
 
-    private function formatThroughput (cThroughput:int):String {
-      if (cThroughput < 1024) {
-        return cThroughput + " B/s";
-      } else if (cThroughput < 1024 * 1024) {
-        return (cThroughput / 1024) + " KB/s";
-      } else {
-        return (cThroughput / (1024 * 1024)) + " MB/s";
+    public function die():void {
+      // 清除当前帧画面
+      if (_videoReference) {
+        _videoReference.clear();
+        _videoReference.attachNetStream(null);
+      }
+      if(_ns) {
+        try {
+          _ns.close();
+          _ns = null;
+        } catch(err:Error) {
+        }
+      }
+      if(_nc) {
+        try {
+          _nc.close();
+          _nc = null;
+        } catch(err:Error) {
+        }
       }
     }
 
-    // 计时器：throughputTimer
-    private function onThroughputTimerTick (e:TimerEvent):void {
-      if (_ns) {
-        _currentThroughput = _ns.bytesLoaded / ((getTimer() - _loadStartTimestamp) / 1000);
-        // Logger.log("当前加载速率: " + formatThroughput(_currentThroughput));
+    public function set src(pValue:String):void {
+      _src = pValue;
+      init();
+    }
+
+    public function get time():Number {
+      return _ns.time;
+    }
+
+    public function get paused():Boolean {
+      return _isPaused;
+    }
+
+    public function set readyState():int {}
+
+    public function onMetaData(pMetaData:Object):void {
+      _metaData = pMetaData;
+      for (var k:String in _metaData) {
+        // Logger.info(k + ": " + _metaData[k]);
       }
+    }
+
+    private function onAsyncError(e:AsyncErrorEvent):void {
+      Logger.log("async error");
     }
 
   }

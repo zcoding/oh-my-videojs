@@ -3,6 +3,7 @@ package com.miniplayer {
   import flash.events.EventDispatcher;
   import flash.media.Video;
   import com.miniplayer.events.MiniPlayerEvent;
+  import com.miniplayer.providers.HTTPVideoProvider;
 
   public class PlayerModel extends EventDispatcher {
 
@@ -40,7 +41,7 @@ package com.miniplayer {
     private function initProvider():void {
       _provider = new HTTPVideoProvider();
       _provider.attachVideo(_videoReference);
-      _provider.setSrc(_src);
+      _provider.src = _src;
     }
 
     public static function getInstance():PlayerModel {
